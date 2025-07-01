@@ -1,265 +1,87 @@
 <!DOCTYPE html>
-<!-- This is the standard document type declaration. -->
 <html lang="en">
-<!-- The root element of the page, with the language set to English. -->
-
 <head>
-    <!-- The head section contains metadata and links to external resources. -->
-    <meta charset="UTF-8">
-    <!-- Specifies the character encoding for the document. UTF-8 is standard. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Ensures the page is responsive and looks good on all devices. -->
-    <title>Ketaki's Corner | A Personal Blog</title>
-    <!-- The title that appears in the browser tab. -->
-    <meta name="description" content="A personal blog gallery showcasing poems and tech articles with a pastel theme.">
-    <!-- A brief description of the page for SEO (Search Engine Optimization). -->
-    <meta name="keywords" content="personal blog, poems, tech, AI, pastel theme, web design">
-    <!-- Keywords for SEO to help search engines understand the page content. -->
-
-    <!-- Google Fonts Import (Updated Fonts) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Imports the new Playfair Display and Poppins fonts. -->
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Blog | Pastel Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
     <style>
-        /* This is the start of the internal CSS styling for the page. */
-
-        /* CSS Variables for Theming (Light & Dark Mode) - Updated Palette */
         :root {
-            /* Defines CSS variables for the entire document. This is for the default (light) theme. */
-            --font-sans: 'Poppins', sans-serif;
-            /* Defines a variable for the main sans-serif font. */
-            --font-serif: 'Playfair Display', serif;
-            /* Defines a variable for the elegant serif font. */
-
-            /* NEW Pastel Color Palette */
-            --color-bg: #E9EAF5;
-            /* NEW: Soft lavender-blue background color for the page. */
-            --color-text: #2C2C2C;
-            /* NEW: A softer, dark gray for primary text. */
-            --color-card-bg: #FEF9FE;
-            /* NEW: A very gentle off-white with a pink hint for cards. */
-            --color-header-bg: rgba(254, 249, 254, 0.85);
-            /* NEW: Semi-transparent card color for the sticky header. */
-            --color-shadow: rgba(108, 114, 169, 0.15);
-            /* NEW: A shadow color that complements the new palette. */
-            --color-border: #DCD9E8;
-            /* NEW: A light lavender border color. */
-
-            /* Accent Colors */
-            --accent-blue: #A3D2E4;
-            /* Tweaked pastel blue for tech articles. */
-            --accent-lavender: #BEAEE2;
-            /* Tweaked pastel lavender for poems. */
-            --accent-pink: #E5A5C4;
-            /* Tweaked pastel pink for active elements. */
-        }
-
-        body.dark-mode {
-            /* This block redefines the CSS variables when the body has the 'dark-mode' class. */
-            --color-bg: #1A1826;
-            /* NEW: Deep, dark purple-blue background. */
-            --color-text: #DCD9E8;
-            /* NEW: Soft off-white text color for dark mode. */
-            --color-card-bg: #252238;
-            /* NEW: A slightly lighter dark purple for cards. */
-            --color-header-bg: rgba(37, 34, 56, 0.85);
-            /* NEW: Semi-transparent dark card color for the header. */
-            --color-shadow: rgba(0, 0, 0, 0.2);
-            /* A subtle shadow for dark mode. */
-            --color-border: #3a3651;
-            /* A darker border color for dark mode. */
-        }
-
-        /* General Body & HTML Styles */
-        html {
-            scroll-behavior: smooth;
+            --pastel-blue: #c3e0e5;
+            --pastel-pink: #fad2e1;
+            --pastel-purple: #d7c0f3;
+            --white: #ffffff;
+            --text-color: #333;
         }
 
         body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--pastel-blue);
             margin: 0;
-            font-family: var(--font-sans);
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            transition: background-color 0.3s ease, color 0.3s ease;
+            color: var(--text-color);
         }
 
-        /* --- Header & Navigation --- */
-        .main-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background-color: var(--color-header-bg);
-            /* Uses semi-transparent color */
-            backdrop-filter: blur(10px);
-            /* Adds a blur effect to the sticky header. */
-            border-bottom: 1px solid var(--color-border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .blog-title {
-            font-family: var(--font-serif);
-            font-size: 1.8em;
-            margin: 0;
-        }
-
-        /* Dark Mode Toggle Switch */
-        .theme-switch-wrapper {
-            display: flex;
-            align-items: center;
-        }
-
-        .theme-switch {
-            display: inline-block;
-            height: 24px;
-            position: relative;
-            width: 48px;
-        }
-
-        .theme-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked+.slider {
-            background-color: var(--accent-lavender);
-        }
-
-        input:checked+.slider:before {
-            transform: translateX(24px);
-        }
-
-        /* Main Content Wrapper */
-        .content-wrapper {
-            padding: 0 20px;
-        }
-
-        /* --- Filter Tabs --- */
         .category-filters {
             text-align: center;
-            padding: 25px 0;
+            padding: 20px;
+            background-color: var(--white);
+            border-bottom: 1px solid #ccc;
         }
 
         .filter-tab {
-            background-color: transparent;
-            border: 2px solid var(--color-border);
-            color: var(--color-text);
+            background-color: var(--pastel-purple);
+            border: none;
             padding: 10px 20px;
-            margin: 5px;
+            margin: 0 5px;
             cursor: pointer;
-            border-radius: 20px;
-            font-family: var(--font-sans);
-            font-weight: 600; /* Bolder font for tabs */
-            transition: all 0.3s ease;
-        }
-
-        .filter-tab:hover {
-            border-color: var(--accent-pink);
-            color: var(--accent-pink);
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
         }
 
         .filter-tab.active {
-            background-color: var(--accent-pink);
-            border-color: var(--accent-pink);
-            color: #fff;
+            background-color: var(--pastel-pink);
+            color: #000;
         }
 
-        /* --- Gallery Grid --- */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            grid-auto-rows: min-content;
-            gap: 25px;
-            padding-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
         }
 
         .grid-item {
-            background-color: var(--color-card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 25px var(--color-shadow);
-            /* Updated shadow */
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            border: 1px solid transparent; /* Start with transparent border */
         }
 
-        /* Floating animation for poem blocks */
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
+        .grid-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .grid-item.poem {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .grid-item.tech-article:hover {
-            transform: scale(1.03) translateY(-5px);
-            box-shadow: 0 10px 30px var(--accent-blue);
-            border-color: var(--accent-blue);
-        }
-
-        .grid-item.poem:hover {
-            transform: scale(1.03) translateY(-5px);
-            box-shadow: 0 10px 30px var(--accent-lavender);
-            border-color: var(--accent-lavender);
-            animation-play-state: paused;
-        }
-
-        /* --- Card Content Styles --- */
-        .grid-item.poem .card-content {
-            padding: 30px;
-            font-family: var(--font-serif);
-            font-size: 1.2em;
-            line-height: 1.6;
+            background-color: var(--pastel-pink);
+            color: #654321;
             text-align: center;
-            color: var(--color-text);
+            padding: 30px;
+            font-family: 'Lora', serif;
+        }
+
+        .grid-item.poem blockquote {
+            font-style: italic;
+            margin: 0;
         }
 
         .grid-item.poem cite {
-            display: block;
             margin-top: 15px;
+            display: block;
             font-size: 0.9em;
-            opacity: 0.7;
-            font-style: italic;
         }
 
         .grid-item.tech-article img {
@@ -270,415 +92,84 @@
 
         .grid-item.tech-article .card-content {
             padding: 20px;
-            font-family: var(--font-sans); /* Changed from mono to sans for consistency */
         }
 
         .grid-item.tech-article h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.2em; /* Slightly adjusted size */
-            font-weight: 600;
+            margin: 0 0 10px;
+            font-size: 1.2em;
         }
 
         .grid-item.tech-article p {
             margin: 0;
             font-size: 0.95em;
-            opacity: 0.8;
-            font-weight: 300;
-        }
-
-        /* --- Page View for Full Content --- */
-        .page-view {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 40px;
-            background-color: var(--color-card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 25px var(--color-shadow);
-            line-height: 1.8;
-        }
-
-        .page-view h1 {
-            font-family: var(--font-serif);
-            font-size: 2.8em;
-            margin-top: 0;
-            text-align: center;
-            color: var(--accent-pink);
-        }
-
-        .page-view .poem-full-content {
-            font-family: var(--font-serif);
-            font-size: 1.2em;
-            white-space: pre-wrap;
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .back-button {
-            display: inline-block;
-            margin-bottom: 30px;
-            padding: 10px 20px;
-            background-color: var(--accent-pink);
-            color: white;
-            text-decoration: none;
-            border-radius: 20px;
-            font-weight: bold;
-            transition: transform 0.2s ease;
-        }
-
-        .back-button:hover {
-            transform: scale(1.05);
-        }
-
-        /* --- Utility Classes --- */
-        .hidden {
-            display: none !important;
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-            .main-header {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .content-wrapper {
-                padding: 0 10px;
-            }
-            .page-view {
-                padding: 20px;
-                margin: 20px 0;
-            }
+            color: #555;
         }
     </style>
 </head>
-
 <body>
-    <!-- The body contains all the visible content of the page. -->
+    <nav class="category-filters">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="tech-article">Tech</button>
+        <button class="filter-tab" data-filter="poem">Poems</button>
+    </nav>
 
-    <header class="main-header">
-        <!-- The main header of the site. -->
-        <h1 class="blog-title">Ketaki's Corner</h1>
-        <!-- The title of the blog. -->
-        <div class="theme-switch-wrapper">
-            <!-- The container for the dark mode toggle switch. -->
-            <label class="theme-switch" for="checkbox">
-                <!-- The label for the checkbox, styled as a switch. -->
-                <input type="checkbox" id="checkbox" />
-                <!-- The actual checkbox input, which is hidden via CSS. -->
-                <div class="slider round"></div>
-                <!-- The visual part of the switch. -->
-            </label>
-        </div>
-    </header>
-
-    <div class="content-wrapper">
-        <!-- This div wraps all the main content that can be switched (grid or pages). -->
-
-        <!-- Main Grid View (Homepage) -->
-        <main id="main-grid-view" class="main-view">
-            <!-- This is the container for the homepage content, visible by default. -->
-            <nav class="category-filters">
-                <!-- Navigation for filtering categories. -->
-                <button class="filter-tab active" data-filter="all">All</button>
-                <button class="filter-tab" data-filter="tech-article">Tech</button>
-                <button class="filter-tab" data-filter="poem">Poems</button>
-            </nav>
-
-            <div class="gallery-grid">
-                <!-- The grid container for all the cards. -->
-
-                <!-- Tech Card 1 -->
-                <div class="grid-item tech-article" data-category="tech-article" data-target-page="tech-page-1">
-                    <img src="https://images.unsplash.com/photo-1620712943543-2858200f7426?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Abstract AI art">
-                    <div class="card-content">
-                        <h3>Can AI Ever Be Creative?</h3>
-                        <p>An exploration into the nature of creativity and whether machine learning models can truly create original art.</p>
-                    </div>
-                </div>
-
-                <!-- Poem Card 1 -->
-                <div class="grid-item poem" data-category="poem" data-target-page="poem-page-1">
-                    <div class="card-content">
-                        <blockquote>"Belief works in cycles of surrender and reward, while doubt spirals in endless questioning."</blockquote>
-                        <cite>– from "my belief"</cite>
-                    </div>
-                </div>
-
-                <!-- Tech Card 2 -->
-                <div class="grid-item tech-article" data-category="tech-article" data-target-page="tech-page-2">
-                    <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Person typing on a futuristic keyboard">
-                    <div class="card-content">
-                        <h3>Prompt Engineering: The Hidden Skill of the Future</h3>
-                        <p>Discover the art and science of crafting the perfect prompts to unlock the full potential of large language models.</p>
-                    </div>
-                </div>
-
-                <!-- Poem Card 2 -->
-                <div class="grid-item poem" data-category="poem" data-target-page="poem-page-2">
-                    <div class="card-content">
-                        <blockquote>"i am Ketaki, blooming in my own dusk, fragrant with complexity, cursed and blessed..."</blockquote>
-                        <cite>– the paradox i carry</cite>
-                    </div>
-                </div>
-                
-                <!-- Tech Card 3 -->
-                <div class="grid-item tech-article" data-category="tech-article" data-target-page="tech-page-3">
-                    <img src="https://images.unsplash.com/photo-1555949963-ff980e625534?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Code on a laptop screen">
-                    <div class="card-content">
-                        <h3>Building AI-Powered Personal Assistants with Web Tech</h3>
-                        <p>A guide to using modern JavaScript frameworks and APIs to create your own intelligent personal assistant.</p>
-                    </div>
-                </div>
-
-                <!-- Poem Card 3 -->
-                <div class="grid-item poem" data-category="poem" data-target-page="poem-page-3">
-                    <div class="card-content">
-                        <blockquote>"If the stars aligned for me at all in this life, It was the day the universe chose you as my mother."</blockquote>
-                        <cite>– for the heart that built mine</cite>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Page Views (Hidden by default) -->
-        <!-- These are the "pages" that appear when a card is clicked. -->
-
-        <!-- Tech Page 1 -->
-        <div id="tech-page-1" class="page-view hidden">
-            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
-            <h1>Can AI Ever Be Creative?</h1>
-            <p>This is the placeholder for the full article on AI and creativity. The debate rages on: can an algorithm, a series of logical steps, truly replicate the spark of human ingenuity? We delve into the works of AI artists, musicians, and writers to explore this fascinating question. We'll look at models like DALL-E and Midjourney, examining their outputs not just for technical proficiency, but for that elusive quality we call art...</p>
-        </div>
-
-        <!-- Tech Page 2 -->
-        <div id="tech-page-2" class="page-view hidden">
-            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
-            <h1>Prompt Engineering: The Hidden Skill of the Future</h1>
-            <p>This is the placeholder for the full article on prompt engineering. As AI becomes more integrated into our daily lives, the ability to communicate effectively with it becomes paramount. Prompt engineering is more than just asking questions; it's about understanding the model's architecture, its biases, and its 'thought' process to guide it toward the desired output. This skill is becoming essential for developers, writers, and designers alike...</p>
-        </div>
-
-        <!-- Tech Page 3 -->
-        <div id="tech-page-3" class="page-view hidden">
-            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
-            <h1>Building AI-Powered Personal Assistants with Web Tech</h1>
-            <p>This is the placeholder for the full article on building AI assistants. Forget proprietary platforms. With the power of open-source libraries like TensorFlow.js, modern browser APIs for speech recognition and synthesis, and a good old JavaScript framework, you can build a surprisingly capable personal assistant that runs right in your browser. This article will walk you through the core concepts and provide a starting point for your own project...</p>
-        </div>
-
-        <!-- Poem Page 1 -->
-        <div id="poem-page-1" class="page-view hidden">
-            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
-            <h1>my belief</h1>
-            <div class="poem-full-content">
-To my philosophical belief that merges with my spiritual one - where boundaries blur, where questions swarm like prayers beneath the fluorescent lights.
-What’s spirituality? Trust, faith, belief suspended in the ether of human longing. What’s philosophy? The study of belief dissected under reason’s careful knife.
-I was in 9th grade writing an essay for “Spirituality vs Religion” - I was a kid & if I didn’t know any better, I would’ve said they’re the same things. But they’re not & my first prize for that essay told me the same (I’m very modest, I promise).
-The topic itself was wrong actually, because you cannot debate on two things that intersect with core functionalities. Belief, faith, whatever you call it, the center of them all. In short, in my opinion of course,
-Spirituality is the course of action through which we set our beliefs & Religion gives us a box to put our beliefs into. Easy, right? But the reality is complex & I'm not a philosopher so I won’t get into it.
-If you’ve read this far, let me share the core of my belief. Born to two doctors, I’ve witnessed firsthand that the loudest prayers echo through hospital corridors. When pulled from darkness, patients often elevate physicians to divine status, and perhaps rightfully so.
-I once dreamt of studying medicine before recognizing I lacked the fortitude for its burdens. Instead, I found my path elsewhere. As the Bhagavad Gita teaches: “You have the right only to work; never be impelled by the fruits of your work.”
-I chose computer science after a practical Google search for “Highest paying jobs in 2021” (go ahead, laugh). Through four years of diligent work, when finally applying for my master’s program, I surrendered to Krishna. “I’ve done my part. Now, the rest is yours.” And the sweet fruit was given.
-Well, I’m still human, still burning with wants that flicker like candlelight under my open-flame existence. Yet I’m willing to try the art of surrender, for faith glows orange even under the blue lights of doubt.
-Belief works in cycles of surrender and reward, while doubt spirals in endless questioning. Between these two, I've found my home by letting both logic and mystery guide my uncertain steps forward.
-            </div>
-        </div>
-        
-        <!-- Poem Page 2 -->
-        <div id="poem-page-2" class="page-view hidden">
-            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
-            <h1>the paradox i carry</h1>
-            <div class="poem-full-content">
-the universe cursed me too, 
-in that moment when endings felt final,
-standing at the edge of my own ceaseless night,
-wondering if light would ever remember the way back.
-but it blessed me too,
-for how else do you learn to be the universe’s contradiction, 
-its favorite mistake, its beloved burden, 
-dancing between grace and punishment like the flower i’m named after?
-
-Ketaki - a flower that blooms at night, 
-with a fragrance so intoxicating it travels for miles, 
-drawing moths and dreamers to her white petals that spiral, 
-making peacocks dance in gardens that are 
-drunk on her presence’s arrival - 
-such stories, i was told of a name that carries the 
-weight of ancient lies and the indication of vindication.
-a sacred bloom that stood beside Brahma 
-when he claimed to have touched the infinite inception, 
-her petals trembling with the weight of his deception.
-
-for this, she was cursed, never to grace the temples of Shiva, 
-her divine fragrance deemed unworthy of 
-the god who dances on the cosmos.
-but, every Maha Shivratri, 
-forgiveness blooms in the darkness between prayers, 
-and she returns to where she belongs.
-in holy places, where her essence is finally blessed, and not cursed.
-
-this is what I carry in my name.
-the contradiction of beauty and betrayal, 
-the realization that witnesses can become accomplices, 
-that suffering and devotion share the same rhythm.
-
-i am Ketaki, 
-blooming in my own dusk, 
-fragrant with complexity, 
-cursed and blessed, 
-the universe’s dancing and defiant daughter, 
-who is forever learning that the scent of survival 
-is more powerful than the sweetest perfume.
-            </div>
-        </div>
-        
-        <!-- Poem Page 3 -->
-        <div id="poem-page-3" class="page-view hidden">
-            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
-            <h1>for the heart that built mine</h1>
-            <div class="poem-full-content">
-You’re the voice that reaches out across the miles, 
-The keeper of my stories, both small and grand, 
-My anchor when the world spins too quickly, 
-The first name I think of in moments of joy.
-You transform empty walls into sanctuary, 
-Not with decorations, but with your spirit, 
-Filling rooms with warmth from your care, 
-With melodies of laughter, with attentive eyes.
-I’ve witnessed your exhaustion yet seen no surrender, 
-Heard whispers of your fears yet felt your courage, 
-Noticed every silent sacrifice made without mention, 
-And borrowed your resilience when mine had faded.
-When college halls and distant cities separate us, 
-Your love finds me through screens and phone calls, 
-Traveling across every barrier of time and space, 
-As constant as the sunrise, as certain as gravity.
-You carry the weight of our world in your heart, 
-And if the stars aligned for me at all in this life, 
-It was the day the universe chose you as my mother.
+    <div class="gallery-grid">
+        <div class="grid-item tech-article" data-category="tech-article" onclick="location.href='ai-creative.html'">
+            <img src="https://images.unsplash.com/photo-1581091870622-2c97dd5d6d6c" alt="AI Brain" />
+            <div class="card-content">
+                <h3>Can AI Ever Be Creative?</h3>
+                <p>Exploring the philosophical and technical boundaries of artificial creativity.</p>
             </div>
         </div>
 
+        <div class="grid-item tech-article" data-category="tech-article" onclick="location.href='prompt-engineering.html'">
+            <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7" alt="Prompting interface" />
+            <div class="card-content">
+                <h3>Prompt Engineering: Hidden Skill of the Future</h3>
+                <p>Why crafting effective prompts is becoming the core superpower for interacting with AI.</p>
+            </div>
+        </div>
+
+        <div class="grid-item tech-article" data-category="tech-article" onclick="location.href='ai-assistants.html'">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Virtual Assistant" />
+            <div class="card-content">
+                <h3>Building AI-Powered Personal Assistants</h3>
+                <p>A walkthrough on making smart agents using web tech and large language models.</p>
+            </div>
+        </div>
+
+        <div class="grid-item poem" data-category="poem" onclick="location.href='poems.html#belief'">
+            <blockquote>"Belief works in cycles of surrender and reward, while doubt spirals in endless questioning."</blockquote>
+            <cite>– from "my belief"</cite>
+        </div>
+
+        <div class="grid-item poem" data-category="poem" onclick="location.href='poems.html#paradox'">
+            <blockquote>"i am Ketaki, blooming in my own dusk, fragrant with complexity, cursed and blessed, the universe’s dancing and defiant daughter."</blockquote>
+            <cite>– the paradox i carry</cite>
+        </div>
     </div>
 
     <script>
-        // This is the start of the JavaScript code.
         document.addEventListener('DOMContentLoaded', () => {
-            // This ensures the script runs only after the entire HTML document has been loaded and parsed.
-
-            // --- DARK MODE TOGGLE LOGIC ---
-            const themeSwitch = document.getElementById('checkbox');
-            // Selects the dark mode toggle checkbox.
-            themeSwitch.addEventListener('change', () => {
-                // Adds an event listener for when the checkbox state changes.
-                document.body.classList.toggle('dark-mode');
-                // Toggles the 'dark-mode' class on the body element.
-                
-                // Save preference to localStorage
-                if (document.body.classList.contains('dark-mode')) {
-                    // If dark mode is now on...
-                    localStorage.setItem('theme', 'dark');
-                    // ...save 'dark' to localStorage.
-                } else {
-                    // Otherwise...
-                    localStorage.setItem('theme', 'light');
-                    // ...save 'light' to localStorage.
-                }
-            });
-
-            // Check for saved theme preference on page load
-            const currentTheme = localStorage.getItem('theme');
-            // Gets the saved theme from localStorage.
-            if (currentTheme === 'dark') {
-                // If the saved theme is 'dark'...
-                document.body.classList.add('dark-mode');
-                // ...add the 'dark-mode' class to the body.
-                themeSwitch.checked = true;
-                // ...and check the toggle switch.
-            }
-
-            // --- FILTERING LOGIC ---
             const filterTabs = document.querySelectorAll('.filter-tab');
-            // Selects all the filter buttons.
             const gridItems = document.querySelectorAll('.grid-item');
-            // Selects all the items in the grid.
 
             filterTabs.forEach(tab => {
-                // Loops through each filter button.
                 tab.addEventListener('click', () => {
-                    // Adds a click event listener to each button.
                     filterTabs.forEach(t => t.classList.remove('active'));
-                    // Removes the 'active' class from all buttons.
                     tab.classList.add('active');
-                    // Adds the 'active' class to the clicked button.
 
                     const filter = tab.dataset.filter;
-                    // Gets the filter category from the button's `data-filter` attribute.
-
                     gridItems.forEach(item => {
-                        // Loops through each grid item.
-                        if (filter === 'all' || item.dataset.category === filter) {
-                            // If the filter is 'all' or the item's category matches the filter...
-                            item.classList.remove('hidden');
-                            // ...show the item.
+                        if (filter === 'all' || item.classList.contains(filter)) {
+                            item.style.display = 'block';
                         } else {
-                            // Otherwise...
-                            item.classList.add('hidden');
-                            // ...hide the item.
+                            item.style.display = 'none';
                         }
                     });
                 });
             });
-            
-            // --- PAGE NAVIGATION LOGIC ---
-            const mainContent = document.querySelector('.content-wrapper');
-            // Selects the main content wrapper.
-            
-            mainContent.addEventListener('click', (e) => {
-                // Adds a single event listener to the content wrapper for efficiency (event delegation).
-                
-                const card = e.target.closest('.grid-item');
-                // Checks if the clicked element or its parent is a grid card.
-                const backButton = e.target.closest('.back-button');
-                // Checks if the clicked element or its parent is a back button.
-
-                if (card) {
-                    // If a card was clicked...
-                    const targetPageId = card.dataset.targetPage;
-                    // Get the target page ID from the card's `data-target-page` attribute.
-                    navigateToPage(targetPageId);
-                    // Call the navigation function.
-                }
-
-                if (backButton) {
-                    // If a back button was clicked...
-                    e.preventDefault(); // Prevents the default link behavior.
-                    const targetPageId = backButton.dataset.targetPage;
-                    // Get the target page ID from the button's `data-target-page` attribute.
-                    navigateToPage(targetPageId);
-                    // Call the navigation function.
-                }
-            });
-
-            function navigateToPage(targetId) {
-                // This function handles showing and hiding the different "pages".
-                document.querySelectorAll('.main-view, .page-view').forEach(page => {
-                    // Selects all main views and page views.
-                    page.classList.add('hidden');
-                    // Hides all of them.
-                });
-
-                const targetPage = document.getElementById(targetId);
-                // Selects the target page by its ID.
-                if (targetPage) {
-                    // If the target page exists...
-                    targetPage.classList.remove('hidden');
-                    // ...show it.
-                    window.scrollTo(0, 0); // Scrolls to the top of the page.
-                }
-            }
         });
     </script>
 </body>
-
 </html>
