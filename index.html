@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Grid Theme | Personal Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* This is the start of the internal CSS styling for the page. */
+
+        /* General Body Styles */
+        body {
+            /* This styles the main body of the page. */
+            font-family: 'Open Sans', sans-serif;
+            /* This sets the default font for the entire page. */
+            margin: 0;
+            /* This removes the default margin around the body. */
+            background-color: #f0f2f5;
+            /* This sets a light gray background color for the page. */
+            color: #333;
+            /* This sets the default text color. */
+        }
+
+        /* Category Filter Tabs */
+        .category-filters {
+            /* This styles the container for the filter buttons. */
+            text-align: center;
+            /* This centers the filter buttons. */
+            padding: 20px;
+            /* This adds some space around the buttons. */
+            background-color: #fff;
+            /* This gives the filter bar a white background. */
+            border-bottom: 1px solid #ddd;
+            /* This adds a subtle line below the filters. */
+        }
+
+        .filter-tab {
+            /* This styles each individual filter button. */
+            background-color: #eee;
+            /* This sets the default background color of the buttons. */
+            border: none;
+            /* This removes the default border from the buttons. */
+            padding: 10px 20px;
+            /* This adds padding inside the buttons to make them larger. */
+            margin: 0 5px;
+            /* This adds a small margin between the buttons. */
+            cursor: pointer;
+            /* This changes the cursor to a pointer on hover to indicate it's clickable. */
+            border-radius: 5px;
+            /* This rounds the corners of the buttons. */
+            transition: background-color 0.3s ease;
+            /* This creates a smooth transition effect when the background color changes. */
+            font-family: 'Open Sans', sans-serif;
+            /* This sets the font for the buttons. */
+            font-weight: bold;
+            /* This makes the text on the buttons bold. */
+        }
+
+        .filter-tab:hover {
+            /* This styles the buttons when a user hovers over them. */
+            background-color: #ddd;
+            /* This slightly darkens the button on hover. */
+        }
+
+        .filter-tab.active {
+            /* This styles the currently active filter button. */
+            background-color: #007bff;
+            /* This sets a blue background for the active tab. */
+            color: #fff;
+            /* This makes the text on the active tab white. */
+        }
+
+        /* Gallery Grid Layout */
+        .gallery-grid {
+            /* This styles the main container for the grid. */
+            display: grid;
+            /* This defines the container as a CSS Grid. */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* This creates responsive columns: they will be at least 300px wide, and more columns will fit as the screen gets wider. */
+            grid-auto-rows: min-content;
+            /* This ensures that rows automatically size to fit their content, which is key for a masonry effect. */
+            grid-gap: 20px;
+            /* This sets the spacing between the grid items. */
+            padding: 20px;
+            /* This adds padding around the entire grid. */
+        }
+
+        /* Basic Styling for all Grid Items */
+        .grid-item {
+            /* This provides the base styling for every item in the grid. */
+            background-color: #fff;
+            /* This sets a white background for the items. */
+            border-radius: 8px;
+            /* This rounds the corners of the items. */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* This adds a subtle shadow to lift the items off the page. */
+            overflow: hidden;
+            /* This ensures that content (like images) doesn't spill outside the rounded corners. */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* This adds a smooth transition for the hover effect. */
+            cursor: pointer;
+            /* This indicates the item is clickable. */
+        }
+
+        .grid-item:hover {
+            /* This styles the items on hover. */
+            transform: translateY(-5px);
+            /* This lifts the item up slightly on hover. */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            /* This adds a more pronounced shadow on hover. */
+        }
+
+        /* Hiding/Showing Items for Filtering */
+        .grid-item.hidden {
+            /* This class is used by JavaScript to hide items. */
+            display: none;
+            /* This completely removes the item from the layout. */
+        }
+
+        /* --- Content-Type Specific Styles --- */
+
+        /* 1. Poem Block Styles */
+        .grid-item.poem {
+            /* This styles the grid items specifically for poems. */
+            background-color: #fdf6e3;
+            /* This sets a calming, creamy background for poems. */
+            color: #654321;
+            /* This sets a brown text color that complements the background. */
+            font-family: 'Lora', serif;
+            /* This uses an elegant serif font for poems. */
+            font-size: 1.2em;
+            /* This makes the font size slightly larger for readability. */
+            line-height: 1.6;
+            /* This increases the space between lines of the poem. */
+            display: flex;
+            /* This uses Flexbox for easy vertical and horizontal centering. */
+            flex-direction: column;
+            /* This stacks the blockquote and cite vertically. */
+            justify-content: center;
+            /* This centers the content vertically. */
+            align-items: center;
+            /* This centers the content horizontally. */
+            padding: 30px;
+            /* This adds extra padding inside the poem blocks. */
+        }
+
+        .grid-item.poem blockquote {
+            /* This styles the quote part of the poem. */
+            margin: 0;
+            /* This removes default margins. */
+            font-style: italic;
+            /* This makes the poem text italic. */
+            text-align: center;
+            /* This centers the text. */
+        }
+
+        .grid-item.poem cite {
+            /* This styles the author's name. */
+            display: block;
+            /* This makes the cite element a block-level element. */
+            margin-top: 15px;
+            /* This adds space above the author's name. */
+            font-size: 0.9em;
+            /* This makes the author's name slightly smaller. */
+            color: #8c6c42;
+            /* This sets a slightly different shade of brown for the author. */
+        }
+
+        /* 2. Tech Article Card Styles */
+        .grid-item.tech-article {
+            /* This styles the grid items for tech articles. */
+            display: flex;
+            /* This enables Flexbox for layout. */
+            flex-direction: column;
+            /* This arranges the card content vertically. */
+        }
+
+        .grid-item.tech-article img {
+            /* This styles the image in the tech card. */
+            width: 100%;
+            /* This makes the image fill the width of the card. */
+            height: 180px;
+            /* This gives the image a fixed height for consistency. */
+            object-fit: cover;
+            /* This ensures the image covers the area without being distorted. */
+        }
+
+        .grid-item.tech-article .card-content {
+            /* This styles the container for the text content. */
+            padding: 20px;
+            /* This adds padding around the text. */
+            font-family: 'Roboto', sans-serif;
+            /* This uses a clean sans-serif font for tech articles. */
+            display: flex;
+            /* This enables Flexbox. */
+            flex-direction: column;
+            /* This stacks the text elements vertically. */
+            flex-grow: 1;
+            /* This allows the content area to grow and fill available space. */
+        }
+
+        .grid-item.tech-article h3 {
+            /* This styles the title of the tech article. */
+            margin: 0 0 10px 0;
+            /* This sets the margin around the title. */
+            font-size: 1.3em;
+            /* This makes the title larger. */
+            color: #1a1a1a;
+            /* This sets a dark color for the title. */
+        }
+
+        .grid-item.tech-article p {
+            /* This styles the excerpt of the tech article. */
+            margin: 0 0 15px 0;
+            /* This sets the margin for the paragraph. */
+            font-size: 0.95em;
+            /* This sets the font size for the excerpt. */
+            color: #555;
+            /* This sets a gray color for the text. */
+            flex-grow: 1;
+            /* This allows the paragraph to take up available space. */
+        }
+
+        /* 3. Sports Media Card Styles */
+        .grid-item.sports-media {
+            /* This styles the grid items for sports content. */
+            background-color: #111;
+            /* This sets a dark background for a dramatic effect. */
+            color: #fff;
+            /* This sets the text color to white. */
+            position: relative;
+            /* This is needed to position the title overlay correctly. */
+        }
+
+        .grid-item.sports-media img {
+            /* This styles the image in the sports card. */
+            width: 100%;
+            /* This makes the image fill the full width. */
+            height: auto;
+            /* This lets the image height adjust automatically. */
+            display: block;
+            /* This removes any extra space below the image. */
+            opacity: 0.8;
+            /* This makes the image slightly transparent to help the title stand out. */
+        }
+
+        .grid-item.sports-media h3 {
+            /* This styles the title for the sports card. */
+            position: absolute;
+            /* This positions the title over the image. */
+            bottom: 0;
+            /* This places the title at the bottom of the card. */
+            left: 0;
+            /* This aligns the title to the left. */
+            width: 100%;
+            /* This makes the title span the full width. */
+            margin: 0;
+            /* This removes default margins. */
+            padding: 20px;
+            /* This adds padding around the title text. */
+            box-sizing: border-box;
+            /* This ensures padding is included in the total width. */
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+            /* This creates a gradient overlay to make the text readable. */
+            font-family: 'Open Sans', sans-serif;
+            /* This uses a bold, modern font. */
+            font-size: 1.4em;
+            /* This makes the title large and impactful. */
+            font-weight: 700;
+            /* This makes the font bold. */
+            text-align: left;
+            /* This aligns the text to the left. */
+        }
+
+        /* Fade-in Animation on Scroll for Poems */
+        .grid-item.poem {
+            /* This sets the initial state for the fade-in animation. */
+            opacity: 0;
+            /* This starts the item as fully transparent. */
+            transform: translateY(20px);
+            /* This starts the item 20px below its final position. */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            /* This defines the smooth transition for opacity and position. */
+        }
+
+        .grid-item.poem.fade-in {
+            /* This is the class added by JavaScript when the item is in view. */
+            opacity: 1;
+            /* This fades the item in to be fully visible. */
+            transform: translateY(0);
+            /* This moves the item up to its final position. */
+        }
+
+        /* Responsive Design using Media Queries */
+        @media (max-width: 768px) {
+            /* This applies styles for screens smaller than 768px (like tablets). */
+            .gallery-grid {
+                /* This adjusts the grid for smaller screens. */
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                /* This makes the columns slightly smaller on tablets. */
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* This applies styles for screens smaller than 480px (like mobile phones). */
+            .gallery-grid {
+                /* This adjusts the grid for mobile. */
+                grid-template-columns: 1fr;
+                /* This makes the grid a single column on small screens. */
+                grid-gap: 15px;
+                /* This reduces the gap between items. */
+                padding: 15px;
+                /* This reduces the padding around the grid. */
+            }
+
+            .category-filters {
+                /* This adjusts the filter tabs for mobile. */
+                padding: 15px 10px;
+                /* This reduces padding. */
+            }
+
+            .filter-tab {
+                /* This adjusts the buttons for mobile. */
+                padding: 8px 12px;
+                /* This makes the buttons smaller. */
+                margin: 2px;
+                /* This adjusts the margin. */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="category-filters">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="tech-article">Tech</button>
+        <button class="filter-tab" data-filter="poem">Poems</button>
+        <button class="filter-tab" data-filter="sports-media">Sports</button>
+        </nav>
+
+    <div class="gallery-grid">
+        <div class="grid-item tech-article" data-category="tech-article">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Circuit Board">
+            <div class="card-content">
+                <h3>The Future of AI in Web Development</h3>
+                <p>Exploring how artificial intelligence is transforming front-end and back-end frameworks, and what it means for developers.</p>
+            </div>
+        </div>
+
+        <div class="grid-item poem" data-category="poem">
+            <blockquote>"Belief works in cycles of surrender and reward, while doubt spirals in endless questioning."</blockquote>
+            <cite>– from "my belief"</cite>
+        </div>
+
+        <div class="grid-item sports-media" data-category="sports-media">
+            <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Football match">
+            <h3>Epic Football Match: Last-Minute Goal!</h3>
+        </div>
+
+        <div class="grid-item poem" data-category="poem">
+            <blockquote>"i am Ketaki, blooming in my own dusk, fragrant with complexity, cursed and blessed, the universe’s dancing and defiant daughter."</blockquote>
+            <cite>– the paradox i carry</cite>
+        </div>
+        
+        <div class="grid-item tech-article" data-category="tech-article">
+            <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Code on a screen">
+            <h3>Mastering CSS Grid for Modern Layouts</h3>
+            <p>A deep dive into the power of CSS Grid and how to build complex, responsive layouts with less code and more flexibility.</p>
+        </div>
+
+        <div class="grid-item poem" data-category="poem">
+            <blockquote>"If the stars aligned for me at all in this life, It was the day the universe chose you as my mother."</blockquote>
+            <cite>– for the heart that built mine</cite>
+        </div>
+
+        <div class="grid-item sports-media" data-category="sports-media">
+            <img src="https://images.unsplash.com/photo-1541252260730-0412e8e2108e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Basketball player dunking">
+            <h3>Incredible Dunk Sends Crowd Wild</h3>
+        </div>
+
+        <div class="grid-item poem" data-category="poem">
+            <blockquote>"is it okay to live in the blur of the moment, to find freedom in what’s unfinished, to breathe in spaces between certainties?"</blockquote>
+            <cite>– questions behind questions</cite>
+        </div>
+
+        <div class="grid-item poem" data-category="poem">
+            <blockquote>"like defying the violence of endings / like endings that begin / like beginnings that end."</blockquote>
+            <cite>– like the acceptance of impermanence</cite>
+        </div>
+    </div>
+
+    <script>
+        // This is the start of the JavaScript code.
+        document.addEventListener('DOMContentLoaded', () => {
+            // This ensures the script runs only after the entire HTML document has been loaded.
+
+            // --- FILTERING LOGIC ---
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            // This selects all the filter buttons.
+            const gridItems = document.querySelectorAll('.grid-item');
+            // This selects all the grid items.
+
+            filterTabs.forEach(tab => {
+                // This loops through each filter button.
+                tab.addEventListener('click', () => {
+                    // This adds a click event listener to each button.
+
+                    // Remove 'active' class from all tabs
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    // This line removes the 'active' class from every button.
+                    // Add 'active' class to the clicked tab
+                    tab.classList.add('active');
+                    // This line adds the 'active' class to the specific button that was clicked.
+
+                    const filter = tab.dataset.filter;
+                    // This gets the value from the `data-filter` attribute of the clicked button (e.g., 'tech-article').
+
+                    gridItems.forEach(item => {
+                        // This loops through each grid item.
+                        if (filter === 'all' || item.classList.contains(filter)) {
+                            // This checks if the filter is 'all' OR if the item's class list includes the filter value.
+                            item.classList.remove('hidden');
+                            // If it matches, the 'hidden' class is removed, making the item visible.
+                        } else {
+                            // If it doesn't match...
+                            item.classList.add('hidden');
+                            // ...the 'hidden' class is added, hiding the item.
+                        }
+                    });
+                });
+            });
+
+            // --- FADE-IN ON SCROLL LOGIC (for poems) ---
+            const poemBlocks = document.querySelectorAll('.grid-item.poem');
+            // This selects only the grid items that are poems.
+
+            const observerOptions = {
+                // These are the settings for the Intersection Observer.
+                root: null,
+                // `null` means the observer will check against the viewport.
+                rootMargin: '0px',
+                // This adds no margin around the root.
+                threshold: 0.1
+                // This means the callback will trigger when 10% of the item is visible.
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                // This creates a new Intersection Observer.
+                entries.forEach(entry => {
+                    // This loops through each observed entry (in this case, each poem block).
+                    if (entry.isIntersecting) {
+                        // This checks if the item is currently intersecting with the viewport.
+                        entry.target.classList.add('fade-in');
+                        // If it is, the 'fade-in' class is added to trigger the CSS animation.
+                        observer.unobserve(entry.target);
+                        // This stops observing the item once it has faded in, for better performance.
+                    }
+                });
+            }, observerOptions);
+            // The options are passed to the observer.
+
+            poemBlocks.forEach(block => {
+                // This loops through each poem block.
+                observer.observe(block);
+                // This tells the observer to start watching each poem block.
+            });
+        });
+    </script>
+</body>
+
+</html>
