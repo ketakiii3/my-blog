@@ -1,469 +1,682 @@
 <!DOCTYPE html>
+<!-- This is the standard document type declaration. -->
 <html lang="en">
+<!-- The root element of the page, with the language set to English. -->
+
 <head>
+    <!-- The head section contains metadata and links to external resources. -->
     <meta charset="UTF-8">
+    <!-- Specifies the character encoding for the document. UTF-8 is standard. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery Grid Theme | Personal Showcase</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Ensures the page is responsive and looks good on all devices. -->
+    <title>Ketaki's Corner | A Personal Blog</title>
+    <!-- The title that appears in the browser tab. -->
+    <meta name="description" content="A personal blog gallery showcasing poems and tech articles with a pastel theme.">
+    <!-- A brief description of the page for SEO (Search Engine Optimization). -->
+    <meta name="keywords" content="personal blog, poems, tech, AI, pastel theme, web design">
+    <!-- Keywords for SEO to help search engines understand the page content. -->
+
+    <!-- Google Fonts Import (Updated Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Imports the new Playfair Display and Poppins fonts. -->
+
     <style>
         /* This is the start of the internal CSS styling for the page. */
 
-        /* General Body Styles */
-        body {
-            /* This styles the main body of the page. */
-            font-family: 'Open Sans', sans-serif;
-            /* This sets the default font for the entire page. */
-            margin: 0;
-            /* This removes the default margin around the body. */
-            background-color: #f0f2f5;
-            /* This sets a light gray background color for the page. */
-            color: #333;
-            /* This sets the default text color. */
+        /* CSS Variables for Theming (Light & Dark Mode) - Updated Palette */
+        :root {
+            /* Defines CSS variables for the entire document. This is for the default (light) theme. */
+            --font-sans: 'Poppins', sans-serif;
+            /* Defines a variable for the main sans-serif font. */
+            --font-serif: 'Playfair Display', serif;
+            /* Defines a variable for the elegant serif font. */
+
+            /* NEW Pastel Color Palette */
+            --color-bg: #E9EAF5;
+            /* NEW: Soft lavender-blue background color for the page. */
+            --color-text: #2C2C2C;
+            /* NEW: A softer, dark gray for primary text. */
+            --color-card-bg: #FEF9FE;
+            /* NEW: A very gentle off-white with a pink hint for cards. */
+            --color-header-bg: rgba(254, 249, 254, 0.85);
+            /* NEW: Semi-transparent card color for the sticky header. */
+            --color-shadow: rgba(108, 114, 169, 0.15);
+            /* NEW: A shadow color that complements the new palette. */
+            --color-border: #DCD9E8;
+            /* NEW: A light lavender border color. */
+
+            /* Accent Colors */
+            --accent-blue: #A3D2E4;
+            /* Tweaked pastel blue for tech articles. */
+            --accent-lavender: #BEAEE2;
+            /* Tweaked pastel lavender for poems. */
+            --accent-pink: #E5A5C4;
+            /* Tweaked pastel pink for active elements. */
         }
 
-        /* Category Filter Tabs */
+        body.dark-mode {
+            /* This block redefines the CSS variables when the body has the 'dark-mode' class. */
+            --color-bg: #1A1826;
+            /* NEW: Deep, dark purple-blue background. */
+            --color-text: #DCD9E8;
+            /* NEW: Soft off-white text color for dark mode. */
+            --color-card-bg: #252238;
+            /* NEW: A slightly lighter dark purple for cards. */
+            --color-header-bg: rgba(37, 34, 56, 0.85);
+            /* NEW: Semi-transparent dark card color for the header. */
+            --color-shadow: rgba(0, 0, 0, 0.2);
+            /* A subtle shadow for dark mode. */
+            --color-border: #3a3651;
+            /* A darker border color for dark mode. */
+        }
+
+        /* General Body & HTML Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-sans);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--color-header-bg);
+            /* Uses semi-transparent color */
+            backdrop-filter: blur(10px);
+            /* Adds a blur effect to the sticky header. */
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .blog-title {
+            font-family: var(--font-serif);
+            font-size: 1.8em;
+            margin: 0;
+        }
+
+        /* Dark Mode Toggle Switch */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 48px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--accent-lavender);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Main Content Wrapper */
+        .content-wrapper {
+            padding: 0 20px;
+        }
+
+        /* --- Filter Tabs --- */
         .category-filters {
-            /* This styles the container for the filter buttons. */
             text-align: center;
-            /* This centers the filter buttons. */
-            padding: 20px;
-            /* This adds some space around the buttons. */
-            background-color: #fff;
-            /* This gives the filter bar a white background. */
-            border-bottom: 1px solid #ddd;
-            /* This adds a subtle line below the filters. */
+            padding: 25px 0;
         }
 
         .filter-tab {
-            /* This styles each individual filter button. */
-            background-color: #eee;
-            /* This sets the default background color of the buttons. */
-            border: none;
-            /* This removes the default border from the buttons. */
+            background-color: transparent;
+            border: 2px solid var(--color-border);
+            color: var(--color-text);
             padding: 10px 20px;
-            /* This adds padding inside the buttons to make them larger. */
-            margin: 0 5px;
-            /* This adds a small margin between the buttons. */
+            margin: 5px;
             cursor: pointer;
-            /* This changes the cursor to a pointer on hover to indicate it's clickable. */
-            border-radius: 5px;
-            /* This rounds the corners of the buttons. */
-            transition: background-color 0.3s ease;
-            /* This creates a smooth transition effect when the background color changes. */
-            font-family: 'Open Sans', sans-serif;
-            /* This sets the font for the buttons. */
-            font-weight: bold;
-            /* This makes the text on the buttons bold. */
+            border-radius: 20px;
+            font-family: var(--font-sans);
+            font-weight: 600; /* Bolder font for tabs */
+            transition: all 0.3s ease;
         }
 
         .filter-tab:hover {
-            /* This styles the buttons when a user hovers over them. */
-            background-color: #ddd;
-            /* This slightly darkens the button on hover. */
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
         }
 
         .filter-tab.active {
-            /* This styles the currently active filter button. */
-            background-color: #007bff;
-            /* This sets a blue background for the active tab. */
+            background-color: var(--accent-pink);
+            border-color: var(--accent-pink);
             color: #fff;
-            /* This makes the text on the active tab white. */
         }
 
-        /* Gallery Grid Layout */
+        /* --- Gallery Grid --- */
         .gallery-grid {
-            /* This styles the main container for the grid. */
             display: grid;
-            /* This defines the container as a CSS Grid. */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            /* This creates responsive columns: they will be at least 300px wide, and more columns will fit as the screen gets wider. */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             grid-auto-rows: min-content;
-            /* This ensures that rows automatically size to fit their content, which is key for a masonry effect. */
-            grid-gap: 20px;
-            /* This sets the spacing between the grid items. */
-            padding: 20px;
-            /* This adds padding around the entire grid. */
+            gap: 25px;
+            padding-bottom: 40px;
         }
 
-        /* Basic Styling for all Grid Items */
         .grid-item {
-            /* This provides the base styling for every item in the grid. */
-            background-color: #fff;
-            /* This sets a white background for the items. */
-            border-radius: 8px;
-            /* This rounds the corners of the items. */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* This adds a subtle shadow to lift the items off the page. */
+            background-color: var(--color-card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 25px var(--color-shadow);
+            /* Updated shadow */
             overflow: hidden;
-            /* This ensures that content (like images) doesn't spill outside the rounded corners. */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            /* This adds a smooth transition for the hover effect. */
+            transition: all 0.3s ease;
             cursor: pointer;
-            /* This indicates the item is clickable. */
+            border: 1px solid transparent; /* Start with transparent border */
         }
 
-        .grid-item:hover {
-            /* This styles the items on hover. */
-            transform: translateY(-5px);
-            /* This lifts the item up slightly on hover. */
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            /* This adds a more pronounced shadow on hover. */
+        /* Floating animation for poem blocks */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
         }
 
-        /* Hiding/Showing Items for Filtering */
-        .grid-item.hidden {
-            /* This class is used by JavaScript to hide items. */
-            display: none;
-            /* This completely removes the item from the layout. */
-        }
-
-        /* --- Content-Type Specific Styles --- */
-
-        /* 1. Poem Block Styles */
         .grid-item.poem {
-            /* This styles the grid items specifically for poems. */
-            background-color: #fdf6e3;
-            /* This sets a calming, creamy background for poems. */
-            color: #654321;
-            /* This sets a brown text color that complements the background. */
-            font-family: 'Lora', serif;
-            /* This uses an elegant serif font for poems. */
-            font-size: 1.2em;
-            /* This makes the font size slightly larger for readability. */
-            line-height: 1.6;
-            /* This increases the space between lines of the poem. */
-            display: flex;
-            /* This uses Flexbox for easy vertical and horizontal centering. */
-            flex-direction: column;
-            /* This stacks the blockquote and cite vertically. */
-            justify-content: center;
-            /* This centers the content vertically. */
-            align-items: center;
-            /* This centers the content horizontally. */
-            padding: 30px;
-            /* This adds extra padding inside the poem blocks. */
+            animation: float 6s ease-in-out infinite;
         }
 
-        .grid-item.poem blockquote {
-            /* This styles the quote part of the poem. */
-            margin: 0;
-            /* This removes default margins. */
-            font-style: italic;
-            /* This makes the poem text italic. */
+        .grid-item.tech-article:hover {
+            transform: scale(1.03) translateY(-5px);
+            box-shadow: 0 10px 30px var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .grid-item.poem:hover {
+            transform: scale(1.03) translateY(-5px);
+            box-shadow: 0 10px 30px var(--accent-lavender);
+            border-color: var(--accent-lavender);
+            animation-play-state: paused;
+        }
+
+        /* --- Card Content Styles --- */
+        .grid-item.poem .card-content {
+            padding: 30px;
+            font-family: var(--font-serif);
+            font-size: 1.2em;
+            line-height: 1.6;
             text-align: center;
-            /* This centers the text. */
+            color: var(--color-text);
         }
 
         .grid-item.poem cite {
-            /* This styles the author's name. */
             display: block;
-            /* This makes the cite element a block-level element. */
             margin-top: 15px;
-            /* This adds space above the author's name. */
             font-size: 0.9em;
-            /* This makes the author's name slightly smaller. */
-            color: #8c6c42;
-            /* This sets a slightly different shade of brown for the author. */
-        }
-
-        /* 2. Tech Article Card Styles */
-        .grid-item.tech-article {
-            /* This styles the grid items for tech articles. */
-            display: flex;
-            /* This enables Flexbox for layout. */
-            flex-direction: column;
-            /* This arranges the card content vertically. */
+            opacity: 0.7;
+            font-style: italic;
         }
 
         .grid-item.tech-article img {
-            /* This styles the image in the tech card. */
             width: 100%;
-            /* This makes the image fill the width of the card. */
             height: 180px;
-            /* This gives the image a fixed height for consistency. */
             object-fit: cover;
-            /* This ensures the image covers the area without being distorted. */
         }
 
         .grid-item.tech-article .card-content {
-            /* This styles the container for the text content. */
             padding: 20px;
-            /* This adds padding around the text. */
-            font-family: 'Roboto', sans-serif;
-            /* This uses a clean sans-serif font for tech articles. */
-            display: flex;
-            /* This enables Flexbox. */
-            flex-direction: column;
-            /* This stacks the text elements vertically. */
-            flex-grow: 1;
-            /* This allows the content area to grow and fill available space. */
+            font-family: var(--font-sans); /* Changed from mono to sans for consistency */
         }
 
         .grid-item.tech-article h3 {
-            /* This styles the title of the tech article. */
             margin: 0 0 10px 0;
-            /* This sets the margin around the title. */
-            font-size: 1.3em;
-            /* This makes the title larger. */
-            color: #1a1a1a;
-            /* This sets a dark color for the title. */
+            font-size: 1.2em; /* Slightly adjusted size */
+            font-weight: 600;
         }
 
         .grid-item.tech-article p {
-            /* This styles the excerpt of the tech article. */
-            margin: 0 0 15px 0;
-            /* This sets the margin for the paragraph. */
-            font-size: 0.95em;
-            /* This sets the font size for the excerpt. */
-            color: #555;
-            /* This sets a gray color for the text. */
-            flex-grow: 1;
-            /* This allows the paragraph to take up available space. */
-        }
-
-        /* 3. Sports Media Card Styles */
-        .grid-item.sports-media {
-            /* This styles the grid items for sports content. */
-            background-color: #111;
-            /* This sets a dark background for a dramatic effect. */
-            color: #fff;
-            /* This sets the text color to white. */
-            position: relative;
-            /* This is needed to position the title overlay correctly. */
-        }
-
-        .grid-item.sports-media img {
-            /* This styles the image in the sports card. */
-            width: 100%;
-            /* This makes the image fill the full width. */
-            height: auto;
-            /* This lets the image height adjust automatically. */
-            display: block;
-            /* This removes any extra space below the image. */
-            opacity: 0.8;
-            /* This makes the image slightly transparent to help the title stand out. */
-        }
-
-        .grid-item.sports-media h3 {
-            /* This styles the title for the sports card. */
-            position: absolute;
-            /* This positions the title over the image. */
-            bottom: 0;
-            /* This places the title at the bottom of the card. */
-            left: 0;
-            /* This aligns the title to the left. */
-            width: 100%;
-            /* This makes the title span the full width. */
             margin: 0;
-            /* This removes default margins. */
-            padding: 20px;
-            /* This adds padding around the title text. */
-            box-sizing: border-box;
-            /* This ensures padding is included in the total width. */
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
-            /* This creates a gradient overlay to make the text readable. */
-            font-family: 'Open Sans', sans-serif;
-            /* This uses a bold, modern font. */
-            font-size: 1.4em;
-            /* This makes the title large and impactful. */
-            font-weight: 700;
-            /* This makes the font bold. */
-            text-align: left;
-            /* This aligns the text to the left. */
+            font-size: 0.95em;
+            opacity: 0.8;
+            font-weight: 300;
         }
 
-        /* Fade-in Animation on Scroll for Poems */
-        .grid-item.poem {
-            /* This sets the initial state for the fade-in animation. */
-            opacity: 0;
-            /* This starts the item as fully transparent. */
-            transform: translateY(20px);
-            /* This starts the item 20px below its final position. */
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-            /* This defines the smooth transition for opacity and position. */
+        /* --- Page View for Full Content --- */
+        .page-view {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: var(--color-card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 25px var(--color-shadow);
+            line-height: 1.8;
         }
 
-        .grid-item.poem.fade-in {
-            /* This is the class added by JavaScript when the item is in view. */
-            opacity: 1;
-            /* This fades the item in to be fully visible. */
-            transform: translateY(0);
-            /* This moves the item up to its final position. */
+        .page-view h1 {
+            font-family: var(--font-serif);
+            font-size: 2.8em;
+            margin-top: 0;
+            text-align: center;
+            color: var(--accent-pink);
         }
 
-        /* Responsive Design using Media Queries */
+        .page-view .poem-full-content {
+            font-family: var(--font-serif);
+            font-size: 1.2em;
+            white-space: pre-wrap;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background-color: var(--accent-pink);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- Utility Classes --- */
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Responsive Design --- */
         @media (max-width: 768px) {
-            /* This applies styles for screens smaller than 768px (like tablets). */
             .gallery-grid {
-                /* This adjusts the grid for smaller screens. */
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                /* This makes the columns slightly smaller on tablets. */
-            }
-        }
-
-        @media (max-width: 480px) {
-            /* This applies styles for screens smaller than 480px (like mobile phones). */
-            .gallery-grid {
-                /* This adjusts the grid for mobile. */
                 grid-template-columns: 1fr;
-                /* This makes the grid a single column on small screens. */
-                grid-gap: 15px;
-                /* This reduces the gap between items. */
-                padding: 15px;
-                /* This reduces the padding around the grid. */
             }
-
-            .category-filters {
-                /* This adjusts the filter tabs for mobile. */
-                padding: 15px 10px;
-                /* This reduces padding. */
+            .main-header {
+                flex-direction: column;
+                gap: 15px;
             }
-
-            .filter-tab {
-                /* This adjusts the buttons for mobile. */
-                padding: 8px 12px;
-                /* This makes the buttons smaller. */
-                margin: 2px;
-                /* This adjusts the margin. */
+            .content-wrapper {
+                padding: 0 10px;
+            }
+            .page-view {
+                padding: 20px;
+                margin: 20px 0;
             }
         }
     </style>
 </head>
 
 <body>
-    <nav class="category-filters">
-        <button class="filter-tab active" data-filter="all">All</button>
-        <button class="filter-tab" data-filter="tech-article">Tech</button>
-        <button class="filter-tab" data-filter="poem">Poems</button>
-        <button class="filter-tab" data-filter="sports-media">Sports</button>
-        </nav>
+    <!-- The body contains all the visible content of the page. -->
 
-    <div class="gallery-grid">
-        <div class="grid-item tech-article" data-category="tech-article">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Circuit Board">
-            <div class="card-content">
-                <h3>The Future of AI in Web Development</h3>
-                <p>Exploring how artificial intelligence is transforming front-end and back-end frameworks, and what it means for developers.</p>
+    <header class="main-header">
+        <!-- The main header of the site. -->
+        <h1 class="blog-title">Ketaki's Corner</h1>
+        <!-- The title of the blog. -->
+        <div class="theme-switch-wrapper">
+            <!-- The container for the dark mode toggle switch. -->
+            <label class="theme-switch" for="checkbox">
+                <!-- The label for the checkbox, styled as a switch. -->
+                <input type="checkbox" id="checkbox" />
+                <!-- The actual checkbox input, which is hidden via CSS. -->
+                <div class="slider round"></div>
+                <!-- The visual part of the switch. -->
+            </label>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <!-- This div wraps all the main content that can be switched (grid or pages). -->
+
+        <!-- Main Grid View (Homepage) -->
+        <main id="main-grid-view" class="main-view">
+            <!-- This is the container for the homepage content, visible by default. -->
+            <nav class="category-filters">
+                <!-- Navigation for filtering categories. -->
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="tech-article">Tech</button>
+                <button class="filter-tab" data-filter="poem">Poems</button>
+            </nav>
+
+            <div class="gallery-grid">
+                <!-- The grid container for all the cards. -->
+
+                <!-- Tech Card 1 -->
+                <div class="grid-item tech-article" data-category="tech-article" data-target-page="tech-page-1">
+                    <img src="https://images.unsplash.com/photo-1620712943543-2858200f7426?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Abstract AI art">
+                    <div class="card-content">
+                        <h3>Can AI Ever Be Creative?</h3>
+                        <p>An exploration into the nature of creativity and whether machine learning models can truly create original art.</p>
+                    </div>
+                </div>
+
+                <!-- Poem Card 1 -->
+                <div class="grid-item poem" data-category="poem" data-target-page="poem-page-1">
+                    <div class="card-content">
+                        <blockquote>"Belief works in cycles of surrender and reward, while doubt spirals in endless questioning."</blockquote>
+                        <cite>– from "my belief"</cite>
+                    </div>
+                </div>
+
+                <!-- Tech Card 2 -->
+                <div class="grid-item tech-article" data-category="tech-article" data-target-page="tech-page-2">
+                    <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Person typing on a futuristic keyboard">
+                    <div class="card-content">
+                        <h3>Prompt Engineering: The Hidden Skill of the Future</h3>
+                        <p>Discover the art and science of crafting the perfect prompts to unlock the full potential of large language models.</p>
+                    </div>
+                </div>
+
+                <!-- Poem Card 2 -->
+                <div class="grid-item poem" data-category="poem" data-target-page="poem-page-2">
+                    <div class="card-content">
+                        <blockquote>"i am Ketaki, blooming in my own dusk, fragrant with complexity, cursed and blessed..."</blockquote>
+                        <cite>– the paradox i carry</cite>
+                    </div>
+                </div>
+                
+                <!-- Tech Card 3 -->
+                <div class="grid-item tech-article" data-category="tech-article" data-target-page="tech-page-3">
+                    <img src="https://images.unsplash.com/photo-1555949963-ff980e625534?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Code on a laptop screen">
+                    <div class="card-content">
+                        <h3>Building AI-Powered Personal Assistants with Web Tech</h3>
+                        <p>A guide to using modern JavaScript frameworks and APIs to create your own intelligent personal assistant.</p>
+                    </div>
+                </div>
+
+                <!-- Poem Card 3 -->
+                <div class="grid-item poem" data-category="poem" data-target-page="poem-page-3">
+                    <div class="card-content">
+                        <blockquote>"If the stars aligned for me at all in this life, It was the day the universe chose you as my mother."</blockquote>
+                        <cite>– for the heart that built mine</cite>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Page Views (Hidden by default) -->
+        <!-- These are the "pages" that appear when a card is clicked. -->
+
+        <!-- Tech Page 1 -->
+        <div id="tech-page-1" class="page-view hidden">
+            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
+            <h1>Can AI Ever Be Creative?</h1>
+            <p>This is the placeholder for the full article on AI and creativity. The debate rages on: can an algorithm, a series of logical steps, truly replicate the spark of human ingenuity? We delve into the works of AI artists, musicians, and writers to explore this fascinating question. We'll look at models like DALL-E and Midjourney, examining their outputs not just for technical proficiency, but for that elusive quality we call art...</p>
+        </div>
+
+        <!-- Tech Page 2 -->
+        <div id="tech-page-2" class="page-view hidden">
+            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
+            <h1>Prompt Engineering: The Hidden Skill of the Future</h1>
+            <p>This is the placeholder for the full article on prompt engineering. As AI becomes more integrated into our daily lives, the ability to communicate effectively with it becomes paramount. Prompt engineering is more than just asking questions; it's about understanding the model's architecture, its biases, and its 'thought' process to guide it toward the desired output. This skill is becoming essential for developers, writers, and designers alike...</p>
+        </div>
+
+        <!-- Tech Page 3 -->
+        <div id="tech-page-3" class="page-view hidden">
+            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
+            <h1>Building AI-Powered Personal Assistants with Web Tech</h1>
+            <p>This is the placeholder for the full article on building AI assistants. Forget proprietary platforms. With the power of open-source libraries like TensorFlow.js, modern browser APIs for speech recognition and synthesis, and a good old JavaScript framework, you can build a surprisingly capable personal assistant that runs right in your browser. This article will walk you through the core concepts and provide a starting point for your own project...</p>
+        </div>
+
+        <!-- Poem Page 1 -->
+        <div id="poem-page-1" class="page-view hidden">
+            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
+            <h1>my belief</h1>
+            <div class="poem-full-content">
+To my philosophical belief that merges with my spiritual one - where boundaries blur, where questions swarm like prayers beneath the fluorescent lights.
+What’s spirituality? Trust, faith, belief suspended in the ether of human longing. What’s philosophy? The study of belief dissected under reason’s careful knife.
+I was in 9th grade writing an essay for “Spirituality vs Religion” - I was a kid & if I didn’t know any better, I would’ve said they’re the same things. But they’re not & my first prize for that essay told me the same (I’m very modest, I promise).
+The topic itself was wrong actually, because you cannot debate on two things that intersect with core functionalities. Belief, faith, whatever you call it, the center of them all. In short, in my opinion of course,
+Spirituality is the course of action through which we set our beliefs & Religion gives us a box to put our beliefs into. Easy, right? But the reality is complex & I'm not a philosopher so I won’t get into it.
+If you’ve read this far, let me share the core of my belief. Born to two doctors, I’ve witnessed firsthand that the loudest prayers echo through hospital corridors. When pulled from darkness, patients often elevate physicians to divine status, and perhaps rightfully so.
+I once dreamt of studying medicine before recognizing I lacked the fortitude for its burdens. Instead, I found my path elsewhere. As the Bhagavad Gita teaches: “You have the right only to work; never be impelled by the fruits of your work.”
+I chose computer science after a practical Google search for “Highest paying jobs in 2021” (go ahead, laugh). Through four years of diligent work, when finally applying for my master’s program, I surrendered to Krishna. “I’ve done my part. Now, the rest is yours.” And the sweet fruit was given.
+Well, I’m still human, still burning with wants that flicker like candlelight under my open-flame existence. Yet I’m willing to try the art of surrender, for faith glows orange even under the blue lights of doubt.
+Belief works in cycles of surrender and reward, while doubt spirals in endless questioning. Between these two, I've found my home by letting both logic and mystery guide my uncertain steps forward.
+            </div>
+        </div>
+        
+        <!-- Poem Page 2 -->
+        <div id="poem-page-2" class="page-view hidden">
+            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
+            <h1>the paradox i carry</h1>
+            <div class="poem-full-content">
+the universe cursed me too, 
+in that moment when endings felt final,
+standing at the edge of my own ceaseless night,
+wondering if light would ever remember the way back.
+but it blessed me too,
+for how else do you learn to be the universe’s contradiction, 
+its favorite mistake, its beloved burden, 
+dancing between grace and punishment like the flower i’m named after?
+
+Ketaki - a flower that blooms at night, 
+with a fragrance so intoxicating it travels for miles, 
+drawing moths and dreamers to her white petals that spiral, 
+making peacocks dance in gardens that are 
+drunk on her presence’s arrival - 
+such stories, i was told of a name that carries the 
+weight of ancient lies and the indication of vindication.
+a sacred bloom that stood beside Brahma 
+when he claimed to have touched the infinite inception, 
+her petals trembling with the weight of his deception.
+
+for this, she was cursed, never to grace the temples of Shiva, 
+her divine fragrance deemed unworthy of 
+the god who dances on the cosmos.
+but, every Maha Shivratri, 
+forgiveness blooms in the darkness between prayers, 
+and she returns to where she belongs.
+in holy places, where her essence is finally blessed, and not cursed.
+
+this is what I carry in my name.
+the contradiction of beauty and betrayal, 
+the realization that witnesses can become accomplices, 
+that suffering and devotion share the same rhythm.
+
+i am Ketaki, 
+blooming in my own dusk, 
+fragrant with complexity, 
+cursed and blessed, 
+the universe’s dancing and defiant daughter, 
+who is forever learning that the scent of survival 
+is more powerful than the sweetest perfume.
+            </div>
+        </div>
+        
+        <!-- Poem Page 3 -->
+        <div id="poem-page-3" class="page-view hidden">
+            <a href="#" class="back-button" data-target-page="main-grid-view">← Back to Home</a>
+            <h1>for the heart that built mine</h1>
+            <div class="poem-full-content">
+You’re the voice that reaches out across the miles, 
+The keeper of my stories, both small and grand, 
+My anchor when the world spins too quickly, 
+The first name I think of in moments of joy.
+You transform empty walls into sanctuary, 
+Not with decorations, but with your spirit, 
+Filling rooms with warmth from your care, 
+With melodies of laughter, with attentive eyes.
+I’ve witnessed your exhaustion yet seen no surrender, 
+Heard whispers of your fears yet felt your courage, 
+Noticed every silent sacrifice made without mention, 
+And borrowed your resilience when mine had faded.
+When college halls and distant cities separate us, 
+Your love finds me through screens and phone calls, 
+Traveling across every barrier of time and space, 
+As constant as the sunrise, as certain as gravity.
+You carry the weight of our world in your heart, 
+And if the stars aligned for me at all in this life, 
+It was the day the universe chose you as my mother.
             </div>
         </div>
 
-        <div class="grid-item poem" data-category="poem">
-            <blockquote>"Belief works in cycles of surrender and reward, while doubt spirals in endless questioning."</blockquote>
-            <cite>– from "my belief"</cite>
-        </div>
-
-        <div class="grid-item sports-media" data-category="sports-media">
-            <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Football match">
-            <h3>Epic Football Match: Last-Minute Goal!</h3>
-        </div>
-
-        <div class="grid-item poem" data-category="poem">
-            <blockquote>"i am Ketaki, blooming in my own dusk, fragrant with complexity, cursed and blessed, the universe’s dancing and defiant daughter."</blockquote>
-            <cite>– the paradox i carry</cite>
-        </div>
-        
-        <div class="grid-item tech-article" data-category="tech-article">
-            <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Code on a screen">
-            <h3>Mastering CSS Grid for Modern Layouts</h3>
-            <p>A deep dive into the power of CSS Grid and how to build complex, responsive layouts with less code and more flexibility.</p>
-        </div>
-
-        <div class="grid-item poem" data-category="poem">
-            <blockquote>"If the stars aligned for me at all in this life, It was the day the universe chose you as my mother."</blockquote>
-            <cite>– for the heart that built mine</cite>
-        </div>
-
-        <div class="grid-item sports-media" data-category="sports-media">
-            <img src="https://images.unsplash.com/photo-1541252260730-0412e8e2108e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=600" alt="Basketball player dunking">
-            <h3>Incredible Dunk Sends Crowd Wild</h3>
-        </div>
-
-        <div class="grid-item poem" data-category="poem">
-            <blockquote>"is it okay to live in the blur of the moment, to find freedom in what’s unfinished, to breathe in spaces between certainties?"</blockquote>
-            <cite>– questions behind questions</cite>
-        </div>
-
-        <div class="grid-item poem" data-category="poem">
-            <blockquote>"like defying the violence of endings / like endings that begin / like beginnings that end."</blockquote>
-            <cite>– like the acceptance of impermanence</cite>
-        </div>
     </div>
 
     <script>
         // This is the start of the JavaScript code.
         document.addEventListener('DOMContentLoaded', () => {
-            // This ensures the script runs only after the entire HTML document has been loaded.
+            // This ensures the script runs only after the entire HTML document has been loaded and parsed.
+
+            // --- DARK MODE TOGGLE LOGIC ---
+            const themeSwitch = document.getElementById('checkbox');
+            // Selects the dark mode toggle checkbox.
+            themeSwitch.addEventListener('change', () => {
+                // Adds an event listener for when the checkbox state changes.
+                document.body.classList.toggle('dark-mode');
+                // Toggles the 'dark-mode' class on the body element.
+                
+                // Save preference to localStorage
+                if (document.body.classList.contains('dark-mode')) {
+                    // If dark mode is now on...
+                    localStorage.setItem('theme', 'dark');
+                    // ...save 'dark' to localStorage.
+                } else {
+                    // Otherwise...
+                    localStorage.setItem('theme', 'light');
+                    // ...save 'light' to localStorage.
+                }
+            });
+
+            // Check for saved theme preference on page load
+            const currentTheme = localStorage.getItem('theme');
+            // Gets the saved theme from localStorage.
+            if (currentTheme === 'dark') {
+                // If the saved theme is 'dark'...
+                document.body.classList.add('dark-mode');
+                // ...add the 'dark-mode' class to the body.
+                themeSwitch.checked = true;
+                // ...and check the toggle switch.
+            }
 
             // --- FILTERING LOGIC ---
             const filterTabs = document.querySelectorAll('.filter-tab');
-            // This selects all the filter buttons.
+            // Selects all the filter buttons.
             const gridItems = document.querySelectorAll('.grid-item');
-            // This selects all the grid items.
+            // Selects all the items in the grid.
 
             filterTabs.forEach(tab => {
-                // This loops through each filter button.
+                // Loops through each filter button.
                 tab.addEventListener('click', () => {
-                    // This adds a click event listener to each button.
-
-                    // Remove 'active' class from all tabs
+                    // Adds a click event listener to each button.
                     filterTabs.forEach(t => t.classList.remove('active'));
-                    // This line removes the 'active' class from every button.
-                    // Add 'active' class to the clicked tab
+                    // Removes the 'active' class from all buttons.
                     tab.classList.add('active');
-                    // This line adds the 'active' class to the specific button that was clicked.
+                    // Adds the 'active' class to the clicked button.
 
                     const filter = tab.dataset.filter;
-                    // This gets the value from the `data-filter` attribute of the clicked button (e.g., 'tech-article').
+                    // Gets the filter category from the button's `data-filter` attribute.
 
                     gridItems.forEach(item => {
-                        // This loops through each grid item.
-                        if (filter === 'all' || item.classList.contains(filter)) {
-                            // This checks if the filter is 'all' OR if the item's class list includes the filter value.
+                        // Loops through each grid item.
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            // If the filter is 'all' or the item's category matches the filter...
                             item.classList.remove('hidden');
-                            // If it matches, the 'hidden' class is removed, making the item visible.
+                            // ...show the item.
                         } else {
-                            // If it doesn't match...
+                            // Otherwise...
                             item.classList.add('hidden');
-                            // ...the 'hidden' class is added, hiding the item.
+                            // ...hide the item.
                         }
                     });
                 });
             });
+            
+            // --- PAGE NAVIGATION LOGIC ---
+            const mainContent = document.querySelector('.content-wrapper');
+            // Selects the main content wrapper.
+            
+            mainContent.addEventListener('click', (e) => {
+                // Adds a single event listener to the content wrapper for efficiency (event delegation).
+                
+                const card = e.target.closest('.grid-item');
+                // Checks if the clicked element or its parent is a grid card.
+                const backButton = e.target.closest('.back-button');
+                // Checks if the clicked element or its parent is a back button.
 
-            // --- FADE-IN ON SCROLL LOGIC (for poems) ---
-            const poemBlocks = document.querySelectorAll('.grid-item.poem');
-            // This selects only the grid items that are poems.
+                if (card) {
+                    // If a card was clicked...
+                    const targetPageId = card.dataset.targetPage;
+                    // Get the target page ID from the card's `data-target-page` attribute.
+                    navigateToPage(targetPageId);
+                    // Call the navigation function.
+                }
 
-            const observerOptions = {
-                // These are the settings for the Intersection Observer.
-                root: null,
-                // `null` means the observer will check against the viewport.
-                rootMargin: '0px',
-                // This adds no margin around the root.
-                threshold: 0.1
-                // This means the callback will trigger when 10% of the item is visible.
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                // This creates a new Intersection Observer.
-                entries.forEach(entry => {
-                    // This loops through each observed entry (in this case, each poem block).
-                    if (entry.isIntersecting) {
-                        // This checks if the item is currently intersecting with the viewport.
-                        entry.target.classList.add('fade-in');
-                        // If it is, the 'fade-in' class is added to trigger the CSS animation.
-                        observer.unobserve(entry.target);
-                        // This stops observing the item once it has faded in, for better performance.
-                    }
-                });
-            }, observerOptions);
-            // The options are passed to the observer.
-
-            poemBlocks.forEach(block => {
-                // This loops through each poem block.
-                observer.observe(block);
-                // This tells the observer to start watching each poem block.
+                if (backButton) {
+                    // If a back button was clicked...
+                    e.preventDefault(); // Prevents the default link behavior.
+                    const targetPageId = backButton.dataset.targetPage;
+                    // Get the target page ID from the button's `data-target-page` attribute.
+                    navigateToPage(targetPageId);
+                    // Call the navigation function.
+                }
             });
+
+            function navigateToPage(targetId) {
+                // This function handles showing and hiding the different "pages".
+                document.querySelectorAll('.main-view, .page-view').forEach(page => {
+                    // Selects all main views and page views.
+                    page.classList.add('hidden');
+                    // Hides all of them.
+                });
+
+                const targetPage = document.getElementById(targetId);
+                // Selects the target page by its ID.
+                if (targetPage) {
+                    // If the target page exists...
+                    targetPage.classList.remove('hidden');
+                    // ...show it.
+                    window.scrollTo(0, 0); // Scrolls to the top of the page.
+                }
+            }
         });
     </script>
 </body>
